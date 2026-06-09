@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Animation Generator — Free Keyframe Animation Maker</title>
+<meta name="description" content="Free online CSS animation generator. Create custom keyframe animations with live preview, timing function visualizer, 20+ presets, and export to CSS or React inline styles.">
+<meta property="og:title" content="CSS Animation Generator — Free Keyframe Animation Maker">
+<meta property="og:description" content="Create custom CSS keyframe animations with live preview, easing visualizer, 20+ presets. Export as CSS or React inline styles.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://css-animation.pages.dev">
+<meta property="og:image" content="https://css-animation.pages.dev/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS Animation Generator — Free Keyframe Animation Maker">
+<meta name="twitter:description" content="Create custom CSS keyframe animations with live preview, easing visualizer, 20+ presets.">
+<link rel="canonical" href="https://css-animation.pages.dev">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Animation Generator",
+  "description": "Free online CSS animation generator with live preview, timing function visualizer, 20+ presets, and React inline style export.",
+  "url": "https://css-animation.pages.dev",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--accent2:#1f6feb;--green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:16px 0;background:var(--surface)}
+header .container{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo{font-size:20px;font-weight:700;color:var(--text)}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:20px;font-size:14px}
+nav a{color:var(--text2);transition:color .2s}
+nav a:hover{color:var(--text);text-decoration:none}
+
+/* Hero */
+.hero{text-align:center;padding:60px 0 40px}
+.hero h1{font-size:clamp(28px,5vw,42px);font-weight:800;margin-bottom:12px;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);font-size:18px;max-width:640px;margin:0 auto}
+
+/* Main grid */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+@media(max-width:768px){.app-grid{grid-template-columns:1fr}}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;overflow:hidden}
+.card h2{font-size:16px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card h2 .icon{width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+
+/* Form controls */
+.form-row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.form-group{flex:1;min-width:120px}
+.form-group label{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
+.form-group input,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 10px;color:var(--text);font-size:13px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+.form-group select{cursor:pointer}
+
+/* Keyframe stops */
+.stops-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.stop-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;position:relative}
+.stop-item .stop-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.stop-item .stop-header span{font-weight:600;font-size:13px;min-width:36px}
+.stop-item .stop-header input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:4px 8px;color:var(--accent);font-size:13px;width:60px}
+.stop-remove{background:var(--red);color:#fff;border:none;border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;opacity:.7;transition:opacity .2s}
+.stop-remove:hover{opacity:1}
+.stop-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stop-controls .form-group{min-width:unset}
+.stop-controls input{font-size:12px;padding:6px 8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-accent{background:var(--accent2);color:#fff}
+.btn-accent:hover{background:var(--accent)}
+.btn-green{background:#238636;color:#fff}
+.btn-green:hover{background:var(--green)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--text2);color:var(--text)}
+
+/* Preview */
+.preview-area{display:flex;align-items:center;justify-content:center;min-height:260px;background:repeating-conic-gradient(var(--surface) 0% 25%,var(--bg) 0% 50%) 50%/20px 20px;border-radius:8px;position:relative;overflow:hidden;margin-bottom:12px}
+.preview-element{width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;text-align:center;word-break:break-word;padding:4px}
+.preview-element.text-mode{width:auto;height:auto;min-width:80px;min-height:40px;padding:12px 20px;font-size:18px}
+.preview-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.preview-toolbar input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-size:13px;flex:1;min-width:120px}
+.preview-toolbar input:focus{border-color:var(--accent)}
+
+/* Easing visualizer */
+.easing-viz{display:flex;align-items:center;gap:16px}
+.easing-canvas-wrap{flex-shrink:0}
+.easing-info{font-size:13px;color:var(--text2);line-height:1.8}
+.easing-info code{background:var(--bg);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--accent)}
+
+/* Presets grid */
+.presets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.preset-btn{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 8px;font-size:12px;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;font-weight:500}
+.preset-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(88,166,255,.06)}
+.preset-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(88,166,255,.1)}
+
+/* Code output */
+.code-output{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.code-tabs{display:flex;border-bottom:1px solid var(--border)}
+.code-tab{padding:8px 16px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:none;transition:color .2s}
+.code-tab.active{color:var(--accent);border-bottom:2px solid var(--accent)}
+.code-tab:hover{color:var(--text)}
+.code-block{padding:16px;overflow-x:auto;max-height:360px;overflow-y:auto}
+.code-block pre{font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:13px;line-height:1.6;white-space:pre;color:var(--text2)}
+.code-block .kw{color:var(--purple)}
+.code-block .prop{color:var(--accent)}
+.code-block .val{color:var(--orange)}
+.code-block .sel{color:var(--green)}
+.code-block .cmt{color:#484f58}
+.copy-btn{position:absolute;top:40px;right:12px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--text2);cursor:pointer;transition:all .2s;z-index:2}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Features */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:60px 0}
+.feature-card{text-align:center;padding:32px 24px}
+.feature-icon{font-size:32px;margin-bottom:12px}
+.feature-card h3{font-size:16px;margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--text2)}
+
+/* FAQ */
+.faq-section{margin:60px 0}
+.faq-section h2{text-align:center;font-size:28px;margin-bottom:32px}
+.faq-item{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden}
+.faq-q{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:15px;transition:background .2s}
+.faq-q:hover{background:rgba(255,255,255,.02)}
+.faq-q::after{content:'+';font-size:20px;color:var(--text2);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{padding:0 20px;max-height:0;overflow:hidden;transition:all .3s;color:var(--text2);font-size:14px;line-height:1.7}
+.faq-item.open .faq-a{padding:0 20px 16px;max-height:300px}
+
+/* Email widget */
+.email-section{text-align:center;padding:48px 0;margin:40px 0;background:var(--surface);border-radius:12px}
+.email-section h2{font-size:24px;margin-bottom:8px}
+.email-section p{color:var(--text2);margin-bottom:20px}
+.email-form{display:flex;gap:8px;max-width:400px;margin:0 auto}
+.email-form input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;color:var(--text);font-size:14px}
+.email-form input:focus{outline:none;border-color:var(--accent)}
+.email-form button{white-space:nowrap}
+
+/* Cross-links */
+.cross-links{text-align:center;padding:32px 0;color:var(--text2);font-size:13px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cross-links a{color:var(--text2);border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-size:12px;transition:all .2s}
+.cross-links a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--text2);font-size:13px}
+footer a{color:var(--text2)}
+footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+  <div class="logo">CSS <span>Animation</span> Generator</div>
+  <nav>
+    <a href="#generator">Generator</a>
+    <a href="#presets">Presets</a>
+    <a href="#features">Features</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="container">
+  <h1>CSS Animation Generator</h1>
+  <p>Create beautiful CSS keyframe animations with live preview, easing curve visualizer, and instant code export.</p>
+</div>
+</section>
+
+<section id="generator" class="container">
+<div class="app-grid">
+
+  <!-- Left: Controls -->
+  <div>
+    <div class="card" style="margin-bottom:20px">
+      <h2><span class="icon">⚙️</span> Animation Controls</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="animName" value="customAnimation">
+        </div>
+        <div class="form-group">
+          <label>Duration (s)</label>
+          <input type="number" id="duration" value="1" min="0.01" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>Delay (s)</label>
+          <input type="number" id="delay" value="0" min="0" step="0.1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Iterations</label>
+          <input type="text" id="iterations" value="1" placeholder="1, 2, infinite...">
+        </div>
+        <div class="form-group">
+          <label>Direction</label>
+          <select id="direction">
+            <option value="normal">normal</option>
+            <option value="reverse">reverse</option>
+            <option value="alternate">alternate</option>
+            <option value="alternate-reverse">alternate-reverse</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Timing Function</label>
+          <select id="timingFn">
+            <option value="ease">ease</option>
+            <option value="linear">linear</option>
+            <option value="ease-in">ease-in</option>
+            <option value="ease-out">ease-out</option>
+            <option value="ease-in-out">ease-in-out</option>
+            <option value="cubic-bezier">cubic-bezier(...)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Fill Mode</label>
+          <select id="fillMode">
+            <option value="none">none</option>
+            <option value="forwards">forwards</option>
+            <option value="backwards">backwards</option>
+            <option value="both">both</option>
+          </select>
+        </div>
+      </div>
+      <div id="cubicBezierRow" class="form-row" style="display:none">
+        <div class="form-group"><label>X1</label><input type="number" id="cbX1" value="0.42" min="0" max="1" step="0.01"></div>
+        <div class="form-group"><label>Y1</label><input type="number" id="cbY1" value="0" min="-0.5" max="1.5" step="0.01"></div>
+        <div class="form-group"><label>X2</label><input type="number" id="cbX2" value="0.58" min="0" max="1" step="0.01"></div>
+        <div class="form-group"><label>Y2</label><input type="number" id="cbY2" value="1" min="-0.5" max="1.5" step="0.01"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">🎯</span> Keyframe Stops <button class="btn btn-sm btn-accent" onclick="addStop()" style="margin-left:auto">+ Add Stop</button></h2>
+      <div class="stops-list" id="stopsList"></div>
+    </div>
+  </div>
+
+  <!-- Right: Preview + Code -->
+  <div>
+    <div class="card" style="margin-bottom:20px">
+      <h2><span class="icon">▶️</span> Live Preview</h2>
+      <div class="preview-area" id="previewArea">
+        <div class="preview-element" id="previewEl">Aa</div>
+      </div>
+      <div class="preview-toolbar">
+        <input type="text" id="previewText" placeholder="Custom text (or leave as box)">
+        <button class="btn btn-sm btn-outline" onclick="toggleShape()">Toggle Shape</button>
+        <button class="btn btn-sm btn-accent" onclick="replayAnimation()">▶ Replay</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <h2><span class="icon">📈</span> Timing Function</h2>
+      <div class="easing-viz">
+        <div class="easing-canvas-wrap">
+          <canvas id="easingCanvas" width="180" height="180"></canvas>
+        </div>
+        <div class="easing-info" id="easingInfo"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="icon">📋</span> Code Output</h2>
+      <div class="code-output">
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchTab('css')">CSS</button>
+          <button class="code-tab" onclick="switchTab('react')">React Inline</button>
+        </div>
+        <button class="copy-btn" onclick="copyCode()">📋 Copy</button>
+        <div class="code-block" id="codeBlock"><pre></pre></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<section id="presets" class="container" style="margin-bottom:40px">
+<div class="card">
+  <h2><span class="icon">🎨</span> Presets <span style="color:var(--text2);font-weight:400;font-size:13px;margin-left:auto">Click to apply</span></h2>
+  <div class="presets-grid" id="presetsGrid"></div>
+</div>
+</section>
+
+<section id="features" class="container">
+<div class="features-grid">
+  <div class="card feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Live Preview</h3>
+    <p>See your animation in real-time as you adjust keyframes, timing functions, and properties. No page refresh needed.</p>
+  </div>
+  <div class="card feature-card">
+    <div class="feature-icon">📈</div>
+    <h3>Easing Curve Visualizer</h3>
+    <p>Visualize cubic-bezier and standard easing curves with an interactive graph. Fine-tune your animation timing precisely.</p>
+  </div>
+  <div class="card feature-card">
+    <div class="feature-icon">⚛️</div>
+    <h3>React Export</h3>
+    <p>Export animations as React inline styles with keyframes helper. Copy-paste ready for your React or Next.js project.</p>
+  </div>
+  <div class="card feature-card">
+    <div class="feature-icon">🎨</div>
+    <h3>20+ Presets</h3>
+    <p>Start from 20 professionally crafted animation presets including bounce, fade, slide, shake, and more. Customize any preset freely.</p>
+  </div>
+</div>
+</section>
+
+<section id="faq" class="container faq-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item">
+  <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I use the generated CSS animation?</div>
+  <div class="faq-a">Copy the generated CSS code and paste it into your stylesheet. Apply the animation class to any HTML element. The code includes both the @keyframes definition and the animation property — just match the class name or apply the animation property directly to your element.</div>
+</div>
+<div class="faq-item">
+  <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I use these animations in React?</div>
+  <div class="faq-a">Yes! Switch to the "React Inline" tab to get a copy-paste ready code snippet using the style object with CSS keyframes injected via a style tag. It works with React, Next.js, and any React-based framework without external dependencies.</div>
+</div>
+<div class="faq-item">
+  <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What CSS properties can I animate?</div>
+  <div class="faq-a">The generator supports transform properties (translateX, translateY, rotate, scale, skewX, skewY) and opacity. These are GPU-accelerated properties that deliver smooth 60fps animations across all modern browsers. You can combine multiple transforms at each keyframe stop.</div>
+</div>
+</section>
+
+<section class="container">
+<div class="email-section">
+  <h2>Get New Generator Updates</h2>
+  <p>We're building more free CSS tools. Leave your email to get notified.</p>
+  <form class="email-form" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Subscribed!';this.querySelector('input').disabled=true;this.querySelector('button').disabled=true">
+    <input type="email" placeholder="your@email.com" required>
+    <button class="btn btn-accent" type="submit">Subscribe</button>
+  </form>
+</div>
+</section>
+
+<section class="container">
+<div class="cross-links">
+  <span>Try our other tools:</span>
+  <a href="https://css-gradient.pages.dev">CSS Gradient Generator</a>
+  <a href="https://css-shadow.pages.dev">CSS Shadow Generator</a>
+  <a href="https://css-flexbox.pages.dev">Flexbox Generator</a>
+  <a href="https://css-grid.pages.dev">CSS Grid Generator</a>
+  <a href="https://color-picker.pages.dev">Color Picker</a>
+  <a href="https://border-radius.pages.dev">Border Radius Generator</a>
+</div>
+</section>
+
+<footer>
+<div class="container">
+  <p>&copy; 2026 CSS Animation Generator. Free tool for developers and designers. <a href="https://github.com/Chesten223/css-animation">Source on GitHub</a></p>
+</div>
+</footer>
+
+<script>
+// ── State ──
+let stops = [];
+let isTextMode = false;
+let activeTab = 'css';
+
+const PRESETS = {
+  fadeIn:       { name:'fadeIn',       kf:{0:{opacity:0},100:{opacity:1}}, tf:'ease-in', dur:0.6 },
+  fadeOut:      { name:'fadeOut',      kf:{0:{opacity:1},100:{opacity:0}}, tf:'ease-out', dur:0.6 },
+  slideIn:      { name:'slideIn',      kf:{0:{translateX:'-100%',opacity:0},100:{translateX:'0',opacity:1}}, tf:'ease-out', dur:0.5 },
+  slideOut:     { name:'slideOut',     kf:{0:{translateX:'0',opacity:1},100:{translateX:'100%',opacity:0}}, tf:'ease-in', dur:0.5 },
+  bounce:       { name:'bounce',       kf:{0:{translateY:'0'},20:{translateY:'0'},40:{translateY:'-30px'},50:{translateY:'0'},60:{translateY:'-15px'},80:{translateY:'0'},100:{translateY:'0'}}, tf:'ease', dur:1 },
+  shake:        { name:'shake',        kf:{0:{translateX:'0'},10:{translateX:'-10px'},20:{translateX:'10px'},30:{translateX:'-10px'},40:{translateX:'10px'},50:{translateX:'-10px'},60:{translateX:'10px'},70:{translateX:'-10px'},80:{translateX:'10px'},90:{translateX:'-10px'},100:{translateX:'0'}}, tf:'ease-in-out', dur:0.6 },
+  pulse:        { name:'pulse',        kf:{0:{scale:'1'},50:{scale:'1.15'},100:{scale:'1'}}, tf:'ease-in-out', dur:0.8 },
+  rotate:       { name:'rotate',       kf:{0:{rotate:'0deg'},100:{rotate:'360deg'}}, tf:'linear', dur:1 },
+  flip:         { name:'flip',         kf:{0:{rotateY:'0deg'},100:{rotateY:'180deg'}}, tf:'ease-in-out', dur:0.6 },
+  zoom:         { name:'zoom',         kf:{0:{scale:'0',opacity:0},50:{scale:'1.1'},100:{scale:'1',opacity:1}}, tf:'ease-out', dur:0.5 },
+  swing:        { name:'swing',        kf:{0:{rotate:'0deg'},20:{rotate:'15deg'},40:{rotate:'-10deg'},60:{rotate:'5deg'},80:{rotate:'-5deg'},100:{rotate:'0deg'}}, tf:'ease-in-out', dur:1 },
+  wobble:       { name:'wobble',       kf:{0:{translateX:'0',rotate:'0deg'},15:{translateX:'-25%',rotate:'-5deg'},30:{translateX:'20%',rotate:'3deg'},45:{translateX:'-15%',rotate:'-3deg'},60:{translateX:'10%',rotate:'2deg'},75:{translateX:'-5%',rotate:'-1deg'},100:{translateX:'0',rotate:'0deg'}}, tf:'ease-in-out', dur:1 },
+  heartbeat:    { name:'heartbeat',    kf:{0:{scale:'1'},14:{scale:'1.3'},28:{scale:'1'},42:{scale:'1.3'},70:{scale:'1'},100:{scale:'1'}}, tf:'ease-in-out', dur:1.3 },
+  flash:        { name:'flash',        kf:{0:{opacity:1},25:{opacity:0},50:{opacity:1},75:{opacity:0},100:{opacity:1}}, tf:'linear', dur:1 },
+  rubberBand:   { name:'rubberBand',   kf:{0:{scaleX:'1',scaleY:'1'},30:{scaleX:'1.25',scaleY:'0.75'},40:{scaleX:'0.75',scaleY:'1.25'},50:{scaleX:'1.15',scaleY:'0.85'},65:{scaleX:'0.95',scaleY:'1.05'},75:{scaleX:'1.05',scaleY:'0.95'},100:{scaleX:'1',scaleY:'1'}}, tf:'ease', dur:0.8 },
+  jello:        { name:'jello',        kf:{0:{skewX:'0deg',skewY:'0deg'},11:{skewX:'-12.5deg',skewY:'-12.5deg'},22:{skewX:'5.625deg',skewY:'5.625deg'},33:{skewX:'-2.8125deg',skewY:'-2.8125deg'},44:{skewX:'1.40625deg',skewY:'1.40625deg'},55:{skewX:'-0.703125deg',skewY:'-0.703125deg'},66:{skewX:'0.351563deg',skewY:'0.351563deg'},77:{skewX:'-0.175781deg',skewY:'-0.175781deg'},100:{skewX:'0deg',skewY:'0deg'}}, tf:'ease', dur:1 },
+  lightSpeedIn: { name:'lightSpeedIn', kf:{0:{translateX:'100%',skewX:'-30deg',opacity:0},60:{skewX:'20deg',opacity:1},80:{skewX:'-5deg',opacity:1},100:{translateX:'0',skewX:'0deg',opacity:1}}, tf:'ease-out', dur:0.5 },
+  rollIn:       { name:'rollIn',       kf:{0:{opacity:0,translateX:'-100%',rotate:'-120deg'},100:{opacity:1,translateX:'0',rotate:'0deg'}}, tf:'ease-out', dur:1 },
+  hinge:        { name:'hinge',        kf:{0:{transformOrigin:'top left',rotate:'0deg'}}, tf:'ease-in-out', dur:2 },
+  bounceIn:      { name:'bounceIn',     kf:{0:{scale:'0.3',opacity:0},50:{scale:'1.05'},70:{scale:'0.9'},100:{scale:'1',opacity:1}}, tf:'ease', dur:0.6 }
+};
+
+// Fix hinge to use rotate
+PRESETS.hinge.kf = {0:{rotate:'0deg',opacity:1},20:{rotate:'80deg'},40:{rotate:'60deg'},60:{rotate:'80deg'},80:{rotate:'60deg',opacity:1},100:{rotate:'0deg',opacity:0}};
+
+// ── Init ──
+function init() {
+  buildPresets();
+  setPreset('bounce');
+  bindEvents();
+  drawEasing();
+}
+
+function bindEvents() {
+  ['animName','duration','delay','iterations','direction','fillMode','timingFn','cbX1','cbY1','cbX2','cbY2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateAll);
+    if (el && el.tagName === 'SELECT') el.addEventListener('change', updateAll);
+  });
+  document.getElementById('timingFn').addEventListener('change', () => {
+    document.getElementById('cubicBezierRow').style.display =
+      document.getElementById('timingFn').value === 'cubic-bezier' ? 'flex' : 'none';
+    updateAll();
+  });
+  document.getElementById('previewText').addEventListener('input', e => {
+    const el = document.getElementById('previewEl');
+    if (e.target.value) { el.textContent = e.target.value; el.classList.add('text-mode'); isTextMode = true; }
+    else { el.textContent = 'Aa'; el.classList.remove('text-mode'); isTextMode = false; }
+  });
+}
+
+// ── Presets ──
+function buildPresets() {
+  const grid = document.getElementById('presetsGrid');
+  grid.innerHTML = '';
+  Object.keys(PRESETS).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'preset-btn';
+    btn.textContent = PRESETS[key].name;
+    btn.dataset.key = key;
+    btn.onclick = () => setPreset(key);
+    grid.appendChild(btn);
+  });
+}
+
+function setPreset(key) {
+  const p = PRESETS[key];
+  if (!p) return;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+  document.getElementById('animName').value = p.name;
+  document.getElementById('duration').value = p.dur || 1;
+  document.getElementById('delay').value = 0;
+  document.getElementById('iterations').value = 1;
+  document.getElementById('direction').value = 'normal';
+  document.getElementById('fillMode').value = 'both';
+  // Set timing
+  const tfSel = document.getElementById('timingFn');
+  if (['ease','linear','ease-in','ease-out','ease-in-out'].includes(p.tf)) {
+    tfSel.value = p.tf;
+    document.getElementById('cubicBezierRow').style.display = 'none';
+  } else {
+    tfSel.value = 'cubic-bezier';
+    document.getElementById('cubicBezierRow').style.display = 'flex';
+  }
+  // Build stops from keyframes
+  stops = [];
+  const kf = p.kf;
+  Object.keys(kf).sort((a,b) => Number(a) - Number(b)).forEach(pct => {
+    const props = kf[pct];
+    stops.push({
+      pct: Number(pct),
+      translateX: props.translateX || '0',
+      translateY: props.translateY || '0',
+      rotate: props.rotate || '0deg',
+      scale: props.scale || '1',
+      skewX: props.skewX || '0deg',
+      skewY: props.skewY || '0deg',
+      opacity: props.opacity !== undefined ? String(props.opacity) : ''
+    });
+  });
+  renderStops();
+  updateAll();
+}
+
+// ── Stops ──
+function addStop() {
+  const pcts = stops.map(s => s.pct);
+  let newPct = 50;
+  if (pcts.length >= 1) {
+    const gaps = [];
+    for (let i = 0; i < pcts.length - 1; i++) gaps.push(pcts[i+1] - pcts[i]);
+    const maxGap = Math.max(...gaps);
+    const idx = gaps.indexOf(maxGap);
+    newPct = Math.round((pcts[idx] + pcts[idx+1]) / 2);
+  }
+  stops.push({ pct: newPct, translateX:'0', translateY:'0', rotate:'0deg', scale:'1', skewX:'0deg', skewY:'0deg', opacity:'' });
+  stops.sort((a,b) => a.pct - b.pct);
+  renderStops();
+  updateAll();
+}
+
+function removeStop(idx) {
+  if (stops.length <= 2) return;
+  stops.splice(idx, 1);
+  renderStops();
+  updateAll();
+}
+
+function renderStops() {
+  const list = document.getElementById('stopsList');
+  list.innerHTML = '';
+  stops.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'stop-item';
+    div.innerHTML = `
+      <div class="stop-header">
+        <span style="color:var(--accent)">%</span>
+        <input type="number" value="${s.pct}" min="0" max="100" onchange="stops[${i}].pct=Number(this.value);stops.sort((a,b)=>a.pct-b.pct);renderStops();updateAll()">
+        <button class="stop-remove" onclick="removeStop(${i})" ${stops.length<=2?'disabled style="opacity:.3;cursor:default"':''}>✕ Remove</button>
+      </div>
+      <div class="stop-controls">
+        <div class="form-group"><label>translateX</label><input value="${s.translateX}" oninput="stops[${i}].translateX=this.value;updateAll()"></div>
+        <div class="form-group"><label>translateY</label><input value="${s.translateY}" oninput="stops[${i}].translateY=this.value;updateAll()"></div>
+        <div class="form-group"><label>rotate</label><input value="${s.rotate}" oninput="stops[${i}].rotate=this.value;updateAll()"></div>
+        <div class="form-group"><label>scale</label><input value="${s.scale}" oninput="stops[${i}].scale=this.value;updateAll()"></div>
+        <div class="form-group"><label>skewX</label><input value="${s.skewX}" oninput="stops[${i}].skewX=this.value;updateAll()"></div>
+        <div class="form-group"><label>skewY</label><input value="${s.skewY}" oninput="stops[${i}].skewY=this.value;updateAll()"></div>
+        <div class="form-group"><label>opacity</label><input value="${s.opacity}" placeholder="0-1" oninput="stops[${i}].opacity=this.value;updateAll()"></div>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+// ── Generate ──
+function getTimingValue() {
+  const v = document.getElementById('timingFn').value;
+  if (v === 'cubic-bezier') {
+    return `cubic-bezier(${document.getElementById('cbX1').value},${document.getElementById('cbY1').value},${document.getElementById('cbX2').value},${document.getElementById('cbY2').value})`;
+  }
+  return v;
+}
+
+function buildTransform(stop) {
+  const parts = [];
+  if (stop.translateX && stop.translateX !== '0') parts.push(`translateX(${stop.translateX})`);
+  if (stop.translateY && stop.translateY !== '0') parts.push(`translateY(${stop.translateY})`);
+  if (stop.rotate && stop.rotate !== '0deg') parts.push(`rotate(${stop.rotate})`);
+  if (stop.scale && stop.scale !== '1') parts.push(`scale(${stop.scale})`);
+  if (stop.skewX && stop.skewX !== '0deg') parts.push(`skewX(${stop.skewX})`);
+  if (stop.skewY && stop.skewY !== '0deg') parts.push(`skewY(${stop.skewY})`);
+  return parts.length ? parts.join(' ') : 'none';
+}
+
+function generateKeyframesCSS() {
+  const name = document.getElementById('animName').value || 'customAnimation';
+  let css = `@keyframes ${name} {\n`;
+  stops.forEach(s => {
+    css += `  ${s.pct}% {\n`;
+    const t = buildTransform(s);
+    if (t !== 'none') css += `    transform: ${t};\n`;
+    if (s.opacity !== '') css += `    opacity: ${s.opacity};\n`;
+    css += `  }\n`;
+  });
+  css += `}`;
+  return css;
+}
+
+function generateAnimationProp() {
+  const name = document.getElementById('animName').value || 'customAnimation';
+  const dur = document.getElementById('duration').value || '1';
+  const del = document.getElementById('delay').value || '0';
+  const iter = document.getElementById('iterations').value || '1';
+  const dir = document.getElementById('direction').value;
+  const tf = getTimingValue();
+  const fill = document.getElementById('fillMode').value;
+  return `animation: ${name} ${dur}s ${del}s ${tf} ${iter} ${dir} ${fill};`;
+}
+
+function generateCSS() {
+  const kf = generateKeyframesCSS();
+  const anim = generateAnimationProp();
+  return `${kf}\n\n.element {\n  ${anim}\n}`;
+}
+
+function generateReact() {
+  const name = document.getElementById('animName').value || 'customAnimation';
+  const kf = generateKeyframesCSS();
+  const dur = document.getElementById('duration').value || '1';
+  const del = document.getElementById('delay').value || '0';
+  const iter = document.getElementById('iterations').value || '1';
+  const dir = document.getElementById('direction').value;
+  const tf = getTimingValue();
+  const fill = document.getElementById('fillMode').value;
+  return `// Add this style tag to your component tree (e.g. in layout):
+<style>{\`${kf.replace(/`/g,'\\`')}\`}</style>
+
+// Apply to your element:
+<div style={{
+  animation: '${name} ${dur}s ${del}s ${tf} ${iter} ${dir} ${fill}'
+}}>
+  Content
+</div>`;
+}
+
+function renderCode() {
+  const pre = document.querySelector('#codeBlock pre');
+  const code = activeTab === 'css' ? generateCSS() : generateReact();
+  pre.textContent = code;
+}
+
+// ── Preview ──
+let previewStyleSheet = null;
+function updatePreview() {
+  const name = document.getElementById('animName').value || 'customAnimation';
+  const kf = generateKeyframesCSS();
+  const dur = document.getElementById('duration').value || '1';
+  const del = document.getElementById('delay').value || '0';
+  const iter = document.getElementById('iterations').value || '1';
+  const dir = document.getElementById('direction').value;
+  const tf = getTimingValue();
+  const fill = document.getElementById('fillMode').value;
+
+  if (previewStyleSheet) previewStyleSheet.remove();
+  previewStyleSheet = document.createElement('style');
+  previewStyleSheet.textContent = kf;
+  document.head.appendChild(previewStyleSheet);
+
+  const el = document.getElementById('previewEl');
+  // Force reflow to restart
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = `${name} ${dur}s ${del}s ${tf} ${iter} ${dir} ${fill}`;
+}
+
+function replayAnimation() { updatePreview(); }
+
+function toggleShape() {
+  const el = document.getElementById('previewEl');
+  isTextMode = !isTextMode;
+  el.classList.toggle('text-mode', isTextMode);
+  if (!isTextMode) {
+    el.textContent = 'Aa';
+    document.getElementById('previewText').value = '';
+  }
+  updatePreview();
+}
+
+// ── Easing ──
+function drawEasing() {
+  const canvas = document.getElementById('easingCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const pad = 20;
+  const pw = w - 2*pad, ph = h - 2*pad;
+
+  ctx.clearRect(0,0,w,h);
+
+  // Background
+  ctx.fillStyle = '#0d1117';
+  ctx.fillRect(0,0,w,h);
+
+  // Grid
+  ctx.strokeStyle = '#21262d';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const x = pad + (pw/4)*i;
+    const y = pad + (ph/4)*i;
+    ctx.beginPath(); ctx.moveTo(x,pad); ctx.lineTo(x,pad+ph); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(pad+pw,y); ctx.stroke();
+  }
+
+  // Diagonal ref
+  ctx.strokeStyle = '#30363d';
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(pad,pad+ph); ctx.lineTo(pad+pw,pad); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Curve
+  const tf = document.getElementById('timingFn').value;
+  let bezierPoints = null;
+  let easingFn;
+
+  if (tf === 'cubic-bezier') {
+    const x1 = parseFloat(document.getElementById('cbX1').value)||0;
+    const y1 = parseFloat(document.getElementById('cbY1').value)||0;
+    const x2 = parseFloat(document.getElementById('cbX2').value)||0;
+    const y2 = parseFloat(document.getElementById('cbY2').value)||0;
+    bezierPoints = {x1,y1,x2,y2};
+    easingFn = cubicBezier(x1,y1,x2,y2);
+  } else {
+    const curves = {
+      'ease':[0.25,0.1,0.25,1],'linear':[0,0,1,1],'ease-in':[0.42,0,1,1],
+      'ease-out':[0,0,0.58,1],'ease-in-out':[0.42,0,0.58,1]
+    };
+    const c = curves[tf] || curves['ease'];
+    bezierPoints = {x1:c[0],y1:c[1],x2:c[2],y2:c[3]};
+    easingFn = cubicBezier(c[0],c[1],c[2],c[3]);
+  }
+
+  ctx.strokeStyle = '#58a6ff';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (let t = 0; t <= 1; t += 0.005) {
+    const x = pad + t * pw;
+    const y = pad + ph - easingFn(t) * ph;
+    t === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // Control points
+  if (bezierPoints) {
+    ctx.fillStyle = '#bc8cff';
+    [[bezierPoints.x1, bezierPoints.y1],[bezierPoints.x2, bezierPoints.y2]].forEach(([bx,by]) => {
+      ctx.beginPath();
+      ctx.arc(pad + bx*pw, pad + ph - by*ph, 4, 0, Math.PI*2);
+      ctx.fill();
+    });
+    // Lines to control points
+    ctx.strokeStyle = 'rgba(188,140,255,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad, pad+ph);
+    ctx.lineTo(pad + bezierPoints.x1*pw, pad + ph - bezierPoints.y1*ph);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pad+pw, pad);
+    ctx.lineTo(pad + bezierPoints.x2*pw, pad + ph - bezierPoints.y2*ph);
+    ctx.stroke();
+  }
+
+  // Labels
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '10px sans-serif';
+  ctx.fillText('0', pad-4, pad+ph+14);
+  ctx.fillText('1', pad+pw-4, pad+ph+14);
+  ctx.fillText('time →', pad+pw/2-16, pad+ph+14);
+  ctx.save();
+  ctx.translate(10, pad+ph/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillText('progress →', -20, 0);
+  ctx.restore();
+
+  // Info
+  const info = document.getElementById('easingInfo');
+  const tfDisplay = getTimingValue();
+  info.innerHTML = `<code>${tfDisplay}</code><br>Duration: <code>${document.getElementById('duration').value}s</code>`;
+}
+
+function cubicBezier(x1,y1,x2,y2) {
+  // Simple cubic bezier evaluation
+  return function(t) {
+    // Use sampling with Newton's method for x→t
+    let lo = 0, hi = 1, mid;
+    for (let i = 0; i < 14; i++) {
+      mid = (lo + hi) / 2;
+      const x = bezierX(mid, x1, x2);
+      if (x < t) lo = mid; else hi = mid;
+    }
+    return bezierY((lo+hi)/2, y1, y2);
+  };
+}
+function bezierX(t, x1, x2) { return 3*(1-t)*(1-t)*t*x1 + 3*(1-t)*t*t*x2 + t*t*t; }
+function bezierY(t, y1, y2) { return 3*(1-t)*(1-t)*t*y1 + 3*(1-t)*t*t*y2 + t*t*t; }
+
+// ── Code tab ──
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.code-tab').forEach(t => t.classList.toggle('active', t.textContent.toLowerCase().includes(tab === 'css' ? 'css' : 'react')));
+  renderCode();
+}
+
+function copyCode() {
+  const code = activeTab === 'css' ? generateCSS() : generateReact();
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+  });
+}
+
+// ── Master update ──
+function updateAll() {
+  updatePreview();
+  renderCode();
+  drawEasing();
+}
+
+// ── Boot ──
+init();
+</script>
+</body>
+</html>
